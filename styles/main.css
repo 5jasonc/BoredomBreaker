@@ -1,0 +1,43 @@
+#app {
+    margin: 15px;
+}
+
+.jumbotron, #output, #interface {
+    padding: 15px 2rem;
+}
+
+.jumbotron {
+    margin-bottom: 15px;
+}
+
+h1 {
+    margin-left: -6px;
+}
+
+#controls {
+    width: 60%;
+}
+
+#output {
+    background: #ccf0f0;
+    width: 40%;
+}
+
+#output h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+#output p {
+    font-size: 20px;
+}
+
+#mapSection {
+    margin: 15px;
+    height: 100%;
+}
+
+#interface {
+    background: lightblue;
+    display: flex;
+}

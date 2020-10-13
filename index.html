@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Boredom Breaker</title>
+        <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+        <link href="styles/main.css" rel="stylesheet" />
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxh5J-1FZ-QGBcAQYss39TShRccF9jcPE&libraries=places"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-database.js"></script>
+        <script src="./src/loader.js" type="module"></script>
+    </head>
+    <body>
+        <div id="app">
+            <b-jumbotron header="Boredom Breaker" lead="Life's too short to sit around. Do something fun!"></b-jumbotron>
+            
+            <section id="interface">              
+                <div id="controls">
+                    <p v-text="status"></p>
+                    <b>Activity type: </b>
+                    <select v-model="activityType" id="activitySelect">
+                        <option value="education">Education</option>
+                        <option value="recreational">Recreational</option>
+                        <option value="social">Social</option>
+                        <option value="diy">D.I.Y</option>
+                        <option value="charity">Charity</option>
+                        <option value="cooking">Cooking</option>
+                        <option value="relaxation">Relaxation</option>
+                        <option value="music">Music</option>
+                        <option value="busywork">Busywork</option>
+                        <option value="" selected>Any</option>
+                    </select><br><br>
+                    <b>Number of participants: </b>
+                    <select v-model="numParticipants">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="" selected>Any</option>
+                    </select><br><br>
+                    <b>Price range: </b>
+                    <input type="text" placeholder="min price" v-model="minPrice">
+                    <b> to </b>
+                    <input type="text" placeholder="max price" v-model="maxPrice">
+                    <br><i> (between 0 and 1) </i><br><br>
+                    <button class="btn btn-primary" v-on:click="search">Search!</button>
+                </div>
+                
+                <result v-bind:activity="result" v-bind:locations="locations.length"></result>
+            </section>
+        </div>
+        
+        <section id="mapSection">
+            <div id="map" style="width:100%; height:300px;"></div>
+        </section>
+    </body>
+</html>

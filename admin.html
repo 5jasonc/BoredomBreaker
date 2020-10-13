@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Firebase Admin</title>
+	<style>
+		ol > li {
+			margin-bottom: 15px;
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+<h1>User Searches</h1>
+<ol id="searchList">
+	<li v-for="item in list">
+		<ul>
+			<li><b>Activity Type: </b>{{item.activityType }}</li>
+			<li><b>Max Price: </b>{{item.maxPrice}}</li>
+			<li><b>Min Price: </b>{{item.minPrice}}</li>
+			<li><b>Participants: </b>{{item.numParticipants}}</li>
+			<li><b>Timestamp: </b>{{item.timestamp}}</li>
+		</ul>
+	</li>
+</ol>
+</div>
+<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+	const firebaseConfig = {
+        apiKey: "AIzaSyAxIOHMDNGth0-15A9F_ppB8ISUbzk8HEQ",
+        authDomain: "boredom-breaker.firebaseapp.com",
+        databaseURL: "https://boredom-breaker.firebaseio.com",
+        projectId: "boredom-breaker",
+        storageBucket: "boredom-breaker.appspot.com",
+        messagingSenderId: "24356562689",
+        appId: "1:24356562689:web:71d61ff55f914f32139d00"
+    };
+	
+	let app = new Vue({
+		el: '#app',
+		data: {
+			list: []
+		},
+		methods: {
+			dataChanged(data){
+				let obj = data.val();
+				
+				this.list = [];
+
+				for(let key in obj) {
+					let row = obj[key];
+
+					this.list.push({
+						activityType: row.activityType,
+						maxPrice: row.maxPrice,
+						minPrice: row.minPrice,
+						numParticipants: row.numParticipants,
+						timestamp: row.timestamp
+					});
+				}
+			},
+			firebaseError(error){
+				console.log(error);
+			}
+		},
+		created() {
+			firebase.initializeApp(firebaseConfig);
+	
+			firebase.database().ref('searches').on("value", this.dataChanged, this.firebaseError);
+		}
+	});
+</script>
+</body>
+</html>
